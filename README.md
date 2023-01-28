@@ -72,15 +72,7 @@ This Program have been test on:
  - **Mac OS Catalina 10.15.6 (19G73)**
  - **Mac OS Big Sur 11.2.1 (20D74)**
 
-## Any donation are welcome
-Donations are welcome, it'll really help me to continue to maintain this project :)
-[![Donate with Bitcoin](https://en.cryptobadges.io/badge/big/1DsjWmS2auGMyxB2vbryjqo7GGCdP7CrbC?showBalance=true)](https://en.cryptobadges.io/donate/1DsjWmS2auGMyxB2vbryjqo7GGCdP7CrbC)
-
-
 
 ## DISCLAIMER 
 **THIS PROJECT IS FOR EDUCATION PURPOSE ONLY, DO NOT RUN IT WITHOUT PERMISSION!**
 **I AM NOT RESPONSIBLE FOR ANY DAMAGED CAUSED BY THE ILLEGAL USAGE OF THIS PROGRAM**
-
-## Stargazers
- [![Stargazers repo roster for @USERNAME/REPO_NAME](https://reporoster.com/stars/HugoLB0/Ransom0)](https://github.com/HugoLB0/Ransom0/stargazers)
