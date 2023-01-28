@@ -58,9 +58,10 @@ Before running the ransomware, you'll need to modify a few things in ransom.py:
  - [x] Message in a GUI windows (Tkinter)
  - [x] !! Add a databases or server instead of mail (SQL) 
  - [ ] !! Add a Web Interface ( Frontend: VueJs ? Backend: Django?) 
- - [ ] !! Bypass permission / Privileges Escalation (WinPwnage)
- - [ ] Hide logs
- - [ ] Automatically  show the message on startup
+ - [x] !! Bypass permission / Privileges Escalation (Linux) 
+ - [ ] !! Bypass permission / Privileges Escalation (WinPwnage) 
+ - [x] Hide logs
+ - [x] Automatically show the message on startup
  - [ ] Generate executable for all OS (pyinstaller)
 
 

